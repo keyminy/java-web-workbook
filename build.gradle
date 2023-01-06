@@ -27,8 +27,13 @@ dependencies {
 		//jsp설정 : jasper와 jstl
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
  	implementation 'javax.servlet:jstl'
+ 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.1'
  	//mariaDB
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.0.0'
+	implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.2.1.Final'
+		//log4j2
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 }
 
 tasks.named('test') {

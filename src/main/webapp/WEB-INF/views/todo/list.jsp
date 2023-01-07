@@ -146,7 +146,11 @@
 										        	return;
 										        }
 										        const num = target.getAttribute("data-num");
-										        self.location = `/todo/list?page=\${num}`;
+										        //self.location = `/todo/list?page=\${num}`;
+										        /*검색 유지 페이징(<form>태그 submit활용)*/
+										        const formObj = document.querySelector("form");
+										        formObj.innerHTML += `<input type='hidden' name='page' value='\${num}'>`
+										        formObj.submit();
 												 },false);
 												 
 												  document.querySelector(".clearBtn").addEventListener("click", function (e){

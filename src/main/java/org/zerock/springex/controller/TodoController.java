@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.springex.dto.PageRequestDTO;
 import org.zerock.springex.dto.TodoDTO;
 import org.zerock.springex.service.TodoService;
 
@@ -50,10 +51,18 @@ public class TodoController {
         return "redirect:/todo/list";
     }
     
-    @RequestMapping("/list")
-    public void list(Model model) {
-    	log.info("todo list......");
-    	model.addAttribute("dtoList",todoService.getAll());
+    @GetMapping("/list")
+    public void list(@Valid PageRequestDTO pageRequestDTO
+    		,BindingResult bindingResult,Model model) {
+    	log.info(pageRequestDTO);
+    	//model.addAttribute("dtoList",todoService.getAll());
+    	
+    	if(bindingResult.hasErrors()) {
+    		//잘못된 파라미터가 들어와도,page : 1, size:10의 고정값을 가지도록 하기
+    		pageRequestDTO = pageRequestDTO.builder().build();
+    	}
+    	model.addAttribute("responseDTO",todoService.getList(pageRequestDTO));
+    
     }
     
     @GetMapping({"/read","/modify"})

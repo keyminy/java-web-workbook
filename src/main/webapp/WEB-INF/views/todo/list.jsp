@@ -63,7 +63,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${dtoList}" var="dto">
+                            <c:forEach items="${responseDTO.dtoList}" var="dto">
                                 <tr>
                                     <th scope="row"><c:out value="${dto.tno}"/></th>
                                     <td>
@@ -78,6 +78,39 @@
                             </c:forEach>
                             </tbody>
                         </table>
+                        <div class="float-end">
+												  <ul class="pagination flex-wrap">
+												  	<c:if test="${responseDTO.prev}">
+													    <li class="page-item">
+													      <a data-num="${responseDTO.start-1}" class="page-link">Previous</a>
+													    </li>												  		
+												  	</c:if>
+												    <c:forEach begin="${responseDTO.start}" end="${responseDTO.end}"
+												    	var="num">
+												    	<li class="page-item ${responseDTO.page == num ? 'active':''}">
+												    		<a data-num="${num}" class="page-link">${num}</a>
+												    	</li>
+												    </c:forEach>
+												    <c:if test="${responseDTO.next}">
+													    <li class="page-item">
+													      <a data-num="${responseDTO.end+1}" class="page-link">Next</a>
+													    </li>												  		
+												  	</c:if>
+												  </ul>
+												</div>
+												<script>
+												 document.querySelector(".pagination").addEventListener("click", function (e) {
+										       //ul태그에 페이징 이벤트 등록 
+													 	e.preventDefault();
+										        e.stopPropagation();
+										        const target = e.target;
+										        if(target.tagName !== 'A'){
+										        	return;
+										        }
+										        const num = target.getAttribute("data-num");
+										        self.location = `/todo/list?page=\${num}`;
+												 },false);
+												</script>
                     </div>
                 </div>
             </div>

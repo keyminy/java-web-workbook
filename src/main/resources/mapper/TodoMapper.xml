@@ -28,5 +28,18 @@
     <update id="update">
         update tbl_todo set title = #{title} , dueDate = #{dueDate}, finished= #{finished} where tno = #{tno}
     </update>
+    
+    <!-- 페이징 -->
+     <select id="selectList" resultType="org.zerock.springex.domain.TodoVO">
+       select * from tbl_todo 
+       order by tno desc 
+       limit #{skip}, #{size}
+   	</select>
+   	
+   	<select id="getCount" resultType="int">
+   		SELECT COUNT(tno)
+   		FROM tbl_todo
+   	</select>
+    
 </mapper>
 

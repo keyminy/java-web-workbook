@@ -1,5 +1,8 @@
 package org.zerock.springex.dto;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
@@ -29,6 +32,17 @@ public class PageRequestDTO {
     
     private String link;
     
+    private String[] types;
+
+    private String keyword;
+
+    private boolean finished;
+
+    private LocalDate from;
+
+    private LocalDate to;
+
+    
     //limit구문에서 사용하는 건너뛰기(skip)의 수
     public int getSkip() {
     	return (page-1) * 10;
@@ -42,5 +56,13 @@ public class PageRequestDTO {
     		link = builder.toString();
     	}
     	return link;
+    }
+    
+    public boolean checkType(String type) {
+    	if(types == null || types.length == 0) {
+    		return false;
+    	}
+    	return Arrays.stream(types).anyMatch(t -> type.equals(t)); 
+    	//return Arrays.stream(types).anyMatch(type::equals); 
     }
 }

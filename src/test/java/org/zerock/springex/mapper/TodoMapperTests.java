@@ -29,30 +29,39 @@ public class TodoMapperTests {
 	
     @Test
     public void testInsert() {
-
         TodoVO todoVO = TodoVO.builder()
                 .title("스프링 테스트 ")
                 .dueDate(LocalDate.of(2022,10,10))
                 .writer("user00")
                 .build();
-
         todoMapper.insert(todoVO);
-
     }
     
     @Test
     public void testSelectList() {
-
         PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
                 .page(1)
                 .size(10)
                 .build();
 
         List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
-
-
         voList.forEach(vo -> log.info(vo));
-
-
     }
+    
+    @Test
+    public void testSelectSearch() {
+    	PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+    			.page(1)
+    			.size(10)
+    			.types(new String[]{"t","w"})
+    			//.types(null)
+    			.keyword("AAAA")
+    			.finished(true)
+    			.from(LocalDate.of(2021,12,01))
+    			.to(LocalDate.of(2022,12,31))
+    			.build();
+    	List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+    	voList.forEach(vo -> log.info(vo));
+    }
+    
 }
